@@ -1,0 +1,21 @@
+# this is a manual mutant index file to create many MT 
+# hope file format mapped from Mark is: PDB WTaa chain position MTaa (or maybe we need figure out from genome positon to the PDB position)
+# head line ....
+
+#<PDB>	<WTaa>	<chain>	<position>	<MTaa>
+10GS	P	A	0	A
+10GS	F	B	7	S
+11GS	Y	A	3	S
+11GS	P	B	2	T
+121P	Q	A	164	G
+12CA	N	A	10	T	
+#12GS
+#133L
+#134L
+#13GS
+#14GS
+#16GS
+
+
+
+

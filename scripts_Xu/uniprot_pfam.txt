@@ -1,0 +1,9 @@
+
+sp|P00918|CAH2_HUMAN      4    258      4    258 PF00194.20  Carb_anhydrase    Domain     1   254   254    330.4   6.9e-99   1 No_clan  
+
+sp|P01112|RASH_HUMAN      5    164      5    165 PF00071.21  Ras               Domain     1   161   162    197.4     1e-58   1 CL0023   
+
+sp|P09211|GSTP1_HUMAN      6     75      4     75 PF02798.19  GST_N             Domain     3    76    76     27.5   2.8e-06   1 CL0172   
+sp|P09211|GSTP1_HUMAN     98    196     98    197 PF14497.5   GST_C_3           Domain     1    98    99     57.2   1.4e-15   1 CL0497   
+
+sp|P61626|LYSC_HUMAN     19    146     19    146 PF00062.19  Lys               Domain     1   124   124    191.3   5.4e-57   1 CL0037   
