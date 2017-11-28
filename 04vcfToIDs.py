@@ -23,7 +23,7 @@ for i in entries:
 
 ### prints header for output
 
-print('chrom' + '\t' + 'location' + "\t" + 'refSNP' + '\t' + 'altSNP' + '\t' +' QUAL' + '\t' + 'DP' + '\t' + 'ENSG' + '\t' + 'ENST')
+print('chrom' + '\t' + 'location' + "\t" + 'refSNP' + '\t' + 'altSNP' + '\t' +' QUAL' + '\t' + 'DP' + '\t' + 'Sequence_Ontology_term' + '\t' + 'Impact' + '\t' + 'ENSG' + '\t' + 'ENST')
 
 ### collects the data
 for i in parsedFile:
@@ -46,8 +46,13 @@ for i in parsedFile:
     count = 0
     for i in longData:
         if i[0:4] == 'ENSG':
-            geneANDtrans.append(longData[count] + '\t' + longData[count+2])
+            if '-' in i and longData[count-1] == 'intergenic_region' :
+                count +=1
+                continue
+            else:
+                geneANDtrans.append(longData[count-3] + '\t' + longData[count-2] + '\t' + longData[count] + '\t' + longData[count+2])
         count +=1
+        
     for i in geneANDtrans:
         print( chrom + '\t' + location + '\t' + refSNP + '\t' + altSNP + '\t' + QUAL + '\t' + DP + '\t' + i)
 
