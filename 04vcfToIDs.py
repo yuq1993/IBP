@@ -1,6 +1,6 @@
 #Input: a VCF file
 #Output: information for each SNP seperated by tab as follows, suitable for the G column in coordinate table
-# chr# | location | refSNP | altSNP | QUAL | DP | ENSG | ENST
+# chr# | location | refSNP | altSNP | QUAL | DP | seqence_ontolgy | Impact | ENSG | ENST
 
 
 import sys
