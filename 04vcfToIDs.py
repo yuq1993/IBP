@@ -46,11 +46,10 @@ for i in parsedFile:
     count = 0
     for i in longData:
         if i[0:4] == 'ENSG':
-            if '-' in i and longData[count-1] == 'intergenic_region' :
+            if longData[count-2][0:4] == 'ENSG':
                 count +=1
                 continue
-            else:
-                geneANDtrans.append(longData[count-3] + '\t' + longData[count-2] + '\t' + longData[count] + '\t' + longData[count+2])
+            geneANDtrans.append(longData[count-3] + '\t' + longData[count-2] + '\t' + longData[count] + '\t' + longData[count+2])
         count +=1
         
     for i in geneANDtrans:
