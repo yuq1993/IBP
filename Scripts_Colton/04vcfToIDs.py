@@ -49,7 +49,9 @@ for i in parsedFile:
             if longData[count-2][0:4] == 'ENSG':
                 count +=1
                 continue
-            geneANDtrans.append(longData[count-3] + '\t' + longData[count-2] + '\t' + longData[count] + '\t' + longData[count+2])
+            if longData[count+6] == '':
+                longData[count+6] = 'NA'
+            geneANDtrans.append(longData[count-3] + '\t' + longData[count-2] + '\t' + longData[count] + '\t' + longData[count+2] + '\t' + longData[count+5] + '\t' + longData[count+6])
         count +=1
         
     for i in geneANDtrans:
