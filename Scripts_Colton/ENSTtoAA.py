@@ -10,7 +10,7 @@ from Bio.Seq import Seq
 import Bio
 
 inFile = sys.argv[1] ### Human Annotation File
-chrFasta = sys.argv[2]
+chrFasta = sys.argv[2] ### Chromosome Fasta
 
 
 with open(inFile,'r') as i:
@@ -34,44 +34,45 @@ for i in entries: # Remove header in an un-efficient manner
 
 ENSTlocations = {}
 for i in parsedEntries:
-    line  = i.split(';')
-    ENST = (line[1]).split(' ')
-    ENST = ENST[2][1:-1]
-    info = line[0].split('\t')
-    if info[2] == 'CDS':
-        if ENST not in ENSTlocations.keys():
-            ENSTlocations[ENST] = ''
-            ENSTlocations[ENST] += str(info[6]) + ' ' + str(info[0]) + ' | '
-#        print(ENST + '\t' +  'chr ' + info[0]  + '\t' + info[3] + '\t' + info[4] + '\t' + info[6] + '\t' + info[7])
-        ENSTlocations[ENST] += str(info[3]) + '_' +  str(info[4]) + ' '
+    columns = i.split('\t')
+    if columns[1] == 'protein_coding':
+        if columns[2] == 'CDS':
+            line  = i.split(';')
+            ENST = (line[1]).split(' ')
+            ENST = ENST[2][1:-1]
+            info = line[0].split('\t')
+            #print(info)
+            if ENST not in ENSTlocations.keys():
+                ENSTlocations[ENST] = ' ' +  info[0] + ' ' +  info[6] + ' ' + info[3] + '_' +info[4]
+            if ENST in ENSTlocations.keys():
+                ENSTlocations[ENST] += ';' + info[3] + '_' + info[4]
 
 
+#for key in ENSTlocations:
+#    print(key + ENSTlocations[key])
 
+ENSTdict = {}
+totalSequences = []
 for key in ENSTlocations:
-    split1 = ENSTlocations[key].split('|') # splits VALUE into the strand, chromsome AND locations
-    split2 = split1[0].split(' ') # splits the strand and chromosome
-    split3 = split1[1].split(' ') # splits the individual locations seperated by a _
-    ## getting the sequence
-    sequence = ''
-    splitKey =key, ENSTlocations[key].split(' ')
-    strand = splitKey[1][0]
-    chromNumber = splitKey[1][1]
-    #print(key,ENSTlocations[key])
-    nucleotideSequnce = ''
+    splitValue = ENSTlocations[key].split(' ') # split into list [ <chr#> <strand> <CDSlocations;CDSlocations>
+    chromosome = splitValue[1] # splits the strand and chromosome
+    strand = splitValue[2]
+    listRegions = splitValue[3].split(';') # splits the individual locations seperated by a _
 
-    for i in split3[1:-1]: ### this covers all the different regions a transcript may be split into
-        startend = i
-        startend = startend.split('_')
+## Retrieveing the sequence
+    sequence = ''
+
+    for i in listRegions: ### this covers all the different regions a transcript may be split into
+        startend = i.split('_')
         start = int(startend[0])
         end = int(startend[1])
-
-        if split2[0] == '-':
+        if strand == '-':
             sequence = str(data[int(start)-1:int(end)]) + sequence
         else:
             sequence += str(data[int(start)-1:int(end)])
 
 
-    if split2[0] == '-': ## only if it is on - strand
+    if strand == '-': ## only if it is on - strand
         sequence = sequence[::-1]
         newseq= ''
         for x in sequence:
@@ -85,7 +86,7 @@ for key in ENSTlocations:
                 newseq += 'G'
         sequence = newseq
     sequence = Seq(sequence)
-    print(key + ' ' + split2[0] +  ' : ' + sequence.translate())
-   # print(key + ' ' + split2[0] +  ' : ' + sequence)
-
-
+   # totalSeq.append(sequence)
+    ENSTdict[ENST] = sequence
+    print(key + ' ' + strand +  ' : ' + sequence.translate())
+    print(key + ' ' + strand +  ' : ' + sequence , listRegions)
