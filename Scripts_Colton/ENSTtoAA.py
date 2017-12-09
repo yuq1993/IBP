@@ -35,21 +35,21 @@ for i in entries: # Remove header in an un-efficient manner
 ENSTlocations = {}
 for i in parsedEntries:
     columns = i.split('\t')
-    if columns[1] == 'protein_coding':
+    if columns[1] == 'protein_coding' or "protein coding":
         if columns[2] == 'CDS':
             line  = i.split(';')
             ENST = (line[1]).split(' ')
             ENST = ENST[2][1:-1]
             info = line[0].split('\t')
-            #print(info)
+   #         print(info)
             if ENST not in ENSTlocations.keys():
-                ENSTlocations[ENST] = ' ' +  info[0] + ' ' +  info[6] + ' ' + info[3] + '_' +info[4]
-            if ENST in ENSTlocations.keys():
-                ENSTlocations[ENST] += ';' + info[3] + '_' + info[4]
+                ENSTlocations[ENST] = ' ' + info[0] + ' ' + info[6] + ' '
+            ENSTlocations[ENST] += info[3] + '_' + info[4] + ';'
 
-
-#for key in ENSTlocations:
-#    print(key + ENSTlocations[key])
+'''
+for key in ENSTlocations:
+    print(key + ENSTlocations[key])
+'''
 
 ENSTdict = {}
 totalSequences = []
@@ -58,7 +58,7 @@ for key in ENSTlocations:
     chromosome = splitValue[1] # splits the strand and chromosome
     strand = splitValue[2]
     listRegions = splitValue[3].split(';') # splits the individual locations seperated by a _
-
+    listRegions = listRegions[:len(listRegions)-1]
 ## Retrieveing the sequence
     sequence = ''
 
@@ -70,7 +70,6 @@ for key in ENSTlocations:
             sequence = str(data[int(start)-1:int(end)]) + sequence
         else:
             sequence += str(data[int(start)-1:int(end)])
-
 
     if strand == '-': ## only if it is on - strand
         sequence = sequence[::-1]
@@ -89,5 +88,7 @@ for key in ENSTlocations:
    # totalSeq.append(sequence)
     ENSTdict[ENST] = sequence
    # print(key + ' ' + strand +  ' : ' + sequence , listRegions)
-   # print(key + ' ' + strand +  ' ' + sequence.translate() + ' ' + sequence , listRegions )
-    print([key ,chromosome, strand, sequence.translate(), sequence , listRegions] )
+    if '*' not in sequence.translate():
+        print(key + ';' + chromosome +  ';'  + strand +  ';' + sequence.translate() + ';' + sequence +  ';' + str(listRegions))
+       # ENSTdict[ENST] = chromosome +  ';'  + strand +  ';' + sequence.translate() + ';' + sequence + ';' + str(listRegions) 
+
