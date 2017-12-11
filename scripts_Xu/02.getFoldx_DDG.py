@@ -1,5 +1,5 @@
 #get foldx DDG info and write in the result_DDG.txt
-#required: DDG_fxout(from 02.getFoldx_DDG.sh), PDBonly(in pdb-files folder), PDBuniprot.txt,
+#required: DDG_fxout.txt(from 02.getFoldx_DDG.sh), MT_list(from 01.create_PDBlist.py)
 
 import sys
 import re
@@ -7,25 +7,33 @@ from collections import defaultdict
 
 
 #need have following result file in the same folder.
-DDG_fxout = open("DDG_fxout",'r')
-PDB_file = open("./pdb-files/PDBonly",'r')
-PDBUniprot_file = open("PDBuniprot",'r')
+DDG_fxout = open("./pdb-files/DDG_fxout.txt",'r')
+MT_list = open('./pdb-files/individual_list.txt','r')
 
-table=open("result_DDG.txt",'w')
+table=open("../result/result_DDG.txt",'w')
 
-#fx_lines = ST_fxout.readlines()
-fx_lines = DDG_fxout.readlines()
-PDB_IDs = PDB_file.readlines()
-
-PDBUniprot_IDs = PDBUniprot_file.readlines()
+fx_line = DDG_fxout.readline()
+list_lines = MT_list.readlines()
 
 PDB_dic=defaultdict(list)
-for id in PDB_IDs:
-    id=id.strip()
-    PDB_dic[id].append(0)
+while fx_line != '':
+    PDBid = re.findall('[A-Za-z]+_\d+',fx_line)[0]
+    PDB_dic[PDBid].append(fx_line.split('\t')[1])
+    fx_line = DDG_fxout.readline()
+
+#write DDG in the table_result
+for line in list_lines:
+    line = line.strip()
+    PDBid = line.split('\t')[3]
+    DDG_info = PDB_dic.get(PDBid)
+    DDG = DDG_info[0]
+    if len(DDG_info) > 1:
+        del DDG_info[0]
+    newline = line + '\t' + DDG + '\n'
+    table.write(newline)
 
 #write DDG with corresponding pdb in PDB_dic
-for line in fx_lines:
+'''for line in fx_lines:
     pdb_ID = line.split("_")[0]
     pdb_DDG = line.split("\t")[1]
     PDB_dic[pdb_ID].append(pdb_DDG)
@@ -46,10 +54,8 @@ for line in PDBUniprot_IDs:
     if len(PDB_DDG) > 1:
         for i in range(1,len(PDB_DDG)):
             newline = line + '\t' + PDB_DDG[i] + '\n'
-            table.write(newline)
+            table.write(newline)'''
 
-ST_fxout.close()
-PDB_file.close()
-PDBUniprot_file.close()
+DDG_fxout.close()
+MT_list.close()
 table.close()
-
