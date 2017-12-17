@@ -3,7 +3,7 @@
 import os
 import re
 
-infile=open("../scripts/new_info_fromSNPeff.target.wild_and_mutated.txt",'r')
+infile=open("new_info_fromSNPeff.target.wild_and_mutated.txt",'r')
 i=0
 for line in infile:
     i+=1

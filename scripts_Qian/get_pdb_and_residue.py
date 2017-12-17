@@ -1,10 +1,12 @@
 #!/usr/bin/python
 
+# run sh new_03.sh
+
 import re
 from Bio.Seq import Seq
 import Bio
 
-
+# loading uniq transcript list
 mapping={}
 transcriptlist={}
 infile=open('mapping_info_transcriptslist_uniq.txt','r')
@@ -25,6 +27,8 @@ infile.close()
 del transcript
 
 aa_dict_3to1 = {'ALA':'A','CYS':'C','ASP':'D','GLU':'E','PHE':'F','GLY':'G','HIS':'H','H1S':'H','H2S':'H','ILE':'I','LYS':'K','LEU':'L','MET':'M','ASN':'N','PRO':'P','GLN':'Q','ARG':'R','SER':'S','THR':'T','VAL':'V','TRP':'W','TYR':'Y'}
+
+# mapping text
 
 infile=open('../data/PSX_map_PDB_to_CDS.txt','r')
 for line in infile:
@@ -60,7 +64,8 @@ infile.close()
 
 #exit()
 
-
+# get from sh new_01.sh
+# filtered data
 infile=open('new_info_fromSNPeff.target.txt','r')
 for line in infile:
     data=line.split('\t')
@@ -102,7 +107,7 @@ for line in infile:
                         print(line.strip(),'\t',al[idx],'\t',new_AA,'SNP_in_PDB_GAP')
                         break
                     else:
-                        print(line.strip(),'\t',al[idx],'\t',new_AA,'PASS') # use "PASS" as identifier in order to screen SNPs
+                        print(line.strip(),'\t',al[idx],'\t',new_codon,'\t',new_AA,'PASS') # use "PASS" as identifier in order to screen SNPs
                         break
                 elif al[idx+1][3]-al[idx][3]<3:
                     print(line.strip(),'\t',"ERROR:two_coordinate_distance_shorter_than_3") # because of two coordinate distance shorter than 3

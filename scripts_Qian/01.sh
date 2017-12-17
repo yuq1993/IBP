@@ -1,2 +1,1 @@
-
-python 01.get_gene2uniProt.py > info_fromSNPeff.uniprot.txt 
+python 01.screenSNPs.py info_fromSNPeff.txt > info_fromSNPeff.target.txt 

@@ -7,7 +7,7 @@ import os
 import re
 import subprocess
 
-infile=open("../scripts/new_info_fromSNPeff.target.wild_and_mutated.txt",'r')
+infile=open("new_info_fromSNPeff.target.wild_and_mutated.txt",'r')
 i=0
 for line in infile:
     i+=1
@@ -50,3 +50,5 @@ for line in infile:
         if(location==pnr):
             new_score=score
     print(line.strip(),'\t',pnr,'\t',old_score,'\t',new_score)
+    cmd="rm "+str(i)+"_*.seq"
+    os.system(cmd)
