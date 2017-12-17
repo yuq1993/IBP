@@ -7,4 +7,8 @@ sed '1d' new_info_fromSNPeff.target_transcriptlist.txt > tmp
 rm new_info_fromSNPeff.target_transcriptlist.txt
 mv tmp new_info_fromSNPeff.target_transcriptlist.txt
 python get_pdb_and_residue.py > new_info_fromSNPeff.target.pdb_and_residue.txt 
+rm mapping_info_transcriptslist.txt
+rm mapping_info_transcriptslist_uniq.txt
+
+
 
