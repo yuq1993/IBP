@@ -1,4 +1,4 @@
-chrom	location	refSNP	altSNP	 QUAL	DP	Sequence_Ontology_term	Impact	ENSG	ENST	HGVS_pos	PRO
+chrom	location	refSNP	altSNP	 QUAL	DP	Sequence_Ontology_term	Impact	ENSG	ENST
 chr1	14464	A	T	97.5	DP=13	downstream_gene_variant	MODIFIER	ENSG00000223972	ENST00000456328	n.*55A>T	NA
 chr1	14464	A	T	97.5	DP=13	downstream_gene_variant	MODIFIER	ENSG00000223972	ENST00000515242	n.*52A>T	NA
 chr1	14464	A	T	97.5	DP=13	downstream_gene_variant	MODIFIER	ENSG00000223972	ENST00000518655	n.*55A>T	NA
